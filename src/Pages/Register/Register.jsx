@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useForm } from "react-hook-form";
 import useSetTitle from '../../Hooks/useSetTitle';
 import Header from '../Shared/Header/Header';
 
 const Register = () => {
     useSetTitle('Register')
+    const { register, handleSubmit } = useForm();
+    const [data, setData] = useState("");
     return (
         <>
             <Header />
@@ -16,15 +19,15 @@ const Register = () => {
                                 <div className="mb-10 text-center md:mb-16">
                                     <h2 className='text-4xl font-bold'>Sign Up</h2>
                                 </div>
-                                <form>
+                                <form onSubmit={handleSubmit((data) => setData(JSON.stringify(data)))}>
                                     <div className="mb-6">
-                                        <input type="text" name='name' placeholder="Name" className="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none focus:border-theme-2nd focus-visible:shadow-none" />
+                                        <input type="text" {...register("name", { required: true })} placeholder="Name" className="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none focus:border-theme-2nd focus-visible:shadow-none" />
                                     </div>
                                     <div className="mb-6">
-                                        <input type="email" name='email' placeholder="Email" className="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none focus:border-theme-2nd focus-visible:shadow-none" />
+                                        <input type="email" {...register("email", {required: true, pattern: /^\S+@\S+$/i})} placeholder="Email" className="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none focus:border-theme-2nd focus-visible:shadow-none" />
                                     </div>
                                     <div className="mb-6">
-                                        <input type="password" name='password' placeholder="Password" className="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none focus:border-theme-2nd focus-visible:shadow-none" />
+                                        <input type="password" {...register("password", { required: true })} placeholder="Password" className="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none focus:border-theme-2nd focus-visible:shadow-none" />
                                     </div>
                                     <div className="mb-10">
                                         <input type="submit" value="Sign In" className="w-full cursor-pointer rounded-md border py-3 px-5 text-base font-bold text-white transition bg-gradient-to-r from-theme-2nd to-theme-1st" />
