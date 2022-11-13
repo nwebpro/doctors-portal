@@ -22,8 +22,11 @@ module.exports = {
     backgroundImage: {
       'appointment-bg': "url('/src/assets/images/appointment.png')",
       'footer-bg': "url('/src/assets/images/footer.png')",
+      'ahero': "url('/src/assets/images/bg.png')",
     },
    },
   },
-  plugins: [],
+  plugins: [
+    require("daisyui"),
+  ],
 }
