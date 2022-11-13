@@ -10,7 +10,7 @@ const AppointmentOption = ({ appointmentOption, setTreatment }) => {
             <label
                 disabled={ slots.length === 0 }
                 htmlFor="booking-modal"
-                className="bg-gradient-to-r from-theme-2nd to-theme-1st py-4 px-6 rounded-lg inline-block text-white font-bold text-sm uppercase leading-5 cursor-pointer"
+                className="btn border-none bg-gradient-to-r from-theme-2nd to-theme-1st py-4 px-6 rounded-lg inline-block text-white font-bold text-sm uppercase leading-5 cursor-pointer"
                 onClick={() => setTreatment(appointmentOption)}
             >Book Appointment</label>
         </div>
