@@ -1,13 +1,32 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import useSetTitle from '../../Hooks/useSetTitle';
 import Header from '../Shared/Header/Header';
+import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
+import { toast } from 'react-toastify'
+import SocialLogin from '../Shared/SocialLogin/SocialLogin';
 
 const Login = () => {
     useSetTitle('Login')
-    const { register, handleSubmit } = useForm();
-    const [data, setData] = useState("");
+    const navigate = useNavigate()
+    const location = useLocation()
+    const from = location.state?.from?.pathname || '/'
+    const { register, formState: { errors }, handleSubmit } = useForm();
+    const { userLogin } = useContext(AuthContext)
+    const [loginError, setLoginError ] = useState('')
+
+    const handleLogin = data => {
+        setLoginError('')
+        userLogin(data.email, data.password)
+        .then(result => {
+            navigate(from, { replace: true })
+            toast.success('User Login Successfully!', { autoClose: 400 })
+        })
+        .catch(error => {
+            setLoginError(error.message)
+        })
+    }
 
     return (
         <>
@@ -20,32 +39,27 @@ const Login = () => {
                                 <div className="mb-10 text-center md:mb-16">
                                     <h2 className='text-4xl font-bold'>Login</h2>
                                 </div>
-                                <form onSubmit={handleSubmit((data) => setData(JSON.stringify(data)))}>
+                                <form onSubmit={ handleSubmit(handleLogin) }>
                                     <div className="mb-6">
-                                        <input type="email" {...register("email", {required: true, pattern: /^\S+@\S+$/i})} placeholder="Email" className="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none focus:border-theme-2nd focus-visible:shadow-none" />
+                                        <input type="email" {...register("email", {required: true})} placeholder="Email" className="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none focus:border-theme-2nd focus-visible:shadow-none" />
+                                        {errors.email && <p className='text-red-600 text-xs text-left' role="alert">{errors.email?.message}</p>}
                                     </div>
                                     <div className="mb-6">
-                                        <input type="password" {...register("password", { required: true })} placeholder="Password" className="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none focus:border-theme-2nd focus-visible:shadow-none" />
+                                        <input type="password" {...register("password", { required: true, minLength: { value: 6, message: 'Password must be 6 character or longer!' } })} placeholder="Password" className="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none focus:border-theme-2nd focus-visible:shadow-none" />
+                                        {errors.password && <p className='text-red-600 text-xs text-left' role="alert">{errors.password?.message}</p>}
                                     </div>
                                     <div className="mb-10">
                                         <input type="submit" value="Sign In" className="w-full cursor-pointer rounded-md border py-3 px-5 text-base font-bold text-white transition bg-gradient-to-r from-theme-2nd to-theme-1st" />
                                     </div>
+                                    {loginError && <p className='text-red-600 text-sm text-center mb-5' role="alert">{ loginError }</p>}
                                 </form>
                                 <a href="#0" className="mb-2 inline-block text-base text-[#adadad] hover:text-theme-2nd hover:underline"> Forget Password? </a>
                                 <p className="text-base text-[#adadad] mb-5"> New to Doctors Portal? <Link to="/register" className="text-theme-2nd hover:underline"> Create new account </Link>
                                 </p>
-                                <div class="text-center border-b border-[#CFCFCF] leading-[0px] mb-5">
-                                    <span class="leading-[0px] p-2 font-semibold tracking-wide text-theme-3rd text-base uppercase bg-white">Or</span>
+                                <div className="text-center border-b border-[#CFCFCF] leading-[0px] mb-5">
+                                    <span className="leading-[0px] p-2 font-semibold tracking-wide text-theme-3rd text-base uppercase bg-white">Or</span>
                                 </div>
-                                <ul className="-mx-2 mb-12 flex justify-between">
-                                    <li className="w-full px-2">
-                                        <button className="py-3 block w-full rounded-md bg-gradient-to-r from-theme-1st to-theme-2nd">
-                                            <svg width="18" height="18" className='mx-auto' viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M17.8477 8.17132H9.29628V10.643H15.4342C15.1065 14.0743 12.2461 15.5574 9.47506 15.5574C5.95916 15.5574 2.8306 12.8821 2.8306 9.01461C2.8306 5.29251 5.81018 2.47185 9.47506 2.47185C12.2759 2.47185 13.9742 4.24567 13.9742 4.24567L15.7024 2.47185C15.7024 2.47185 13.3783 0.000145544 9.35587 0.000145544C4.05223 -0.0289334 0 4.30383 0 8.98553C0 13.5218 3.81386 18 9.44526 18C14.4212 18 17.9967 14.7141 17.9967 9.79974C18.0264 8.78198 17.8477 8.17132 17.8477 8.17132Z" fill="white" />
-                                            </svg>
-                                        </button>
-                                    </li>
-                                </ul>
+                                <SocialLogin />
                                 <div>
                                     <span className="absolute top-1 right-1">
                                         <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">

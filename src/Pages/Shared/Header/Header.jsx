@@ -1,8 +1,22 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../../Context/AuthProvider/AuthProvider';
+import { toast } from 'react-toastify'
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { user, userLogout } = useContext(AuthContext)
+    const navigate = useNavigate()
+    const handleUserLogout = () => {
+        userLogout()
+        .then(() => {
+            navigate('/')
+            toast.warning('User Logout Successfully!', { autoClose: 400 })
+        })
+        .catch(error => {
+            toast.error(error.message, { autoClose: 400 })
+        })
+    }
     const menuItems = 
     <>
         <li>
@@ -55,16 +69,35 @@ const Header = () => {
                 Contact Us
             </Link>
         </li>
-        <li>
-            <Link
-            to="/login"
-            aria-label="Login"
-            title="Login"
-            className="font-normal tracking-wide text-black transition-colors duration-200 font-base leading-[21px]"
-            >
-                Login
-            </Link>
-        </li>
+        {
+            user?.uid ?
+            <>
+                <li>
+                    <Link
+                    to="/dashboard"
+                    aria-label="Dashboard"
+                    title="Dashboard"
+                    className="font-normal tracking-wide text-black transition-colors duration-200 font-base leading-[21px]"
+                    >
+                        Dashboard
+                    </Link>
+                </li>
+                <li onClick={ handleUserLogout }>
+                    <button>Logout</button>
+                </li>
+            </>
+            :
+            <li>
+                <Link
+                to="/login"
+                aria-label="Login"
+                title="Login"
+                className="font-normal tracking-wide text-black transition-colors duration-200 font-base leading-[21px]"
+                >
+                    Login
+                </Link>
+            </li>
+        }
     </>
     return (
         <div className="h-16 py-4">
