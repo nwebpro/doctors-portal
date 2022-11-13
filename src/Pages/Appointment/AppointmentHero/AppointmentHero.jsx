@@ -8,7 +8,7 @@ const AppointmentHero = ({ selectedDate, setSelectedDate }) => {
             <div className='container mx-auto px-[21px]'>
                 <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
                     <div className='order-2 lg:order-1'>
-                        <div className='lg:w-[350px] mx-auto bg-white rounded-[18px] p-5 shadow-box-shadow'>
+                        <div className='w-full md:w-[350px] mx-auto bg-white rounded-[18px] sm:p-5 shadow-box-shadow'>
                             <DayPicker 
                                 mode='single'
                                 selected={ selectedDate }

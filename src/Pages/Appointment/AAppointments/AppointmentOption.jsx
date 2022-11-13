@@ -3,7 +3,7 @@ import React from 'react';
 const AppointmentOption = ({ appointmentOption, setTreatment }) => {
     const { name, slots } = appointmentOption
     return (
-        <div className='bg-white shadow-box-shadow py-[42px] px-20 text-center rounded-[18px]'>
+        <div className='bg-white shadow-box-shadow py-[42px] text-center rounded-[18px]'>
             <h3 className='font-semibold text-lg leading-7 mb-2 text-theme-2nd'>{ name }</h3>
             <p className='text-black text-sm leading-5 font-normal mb-3'>{slots.length > 0 ? slots[0] : 'Try Another day'}</p>
             <p className='text-black text-sm leading-5 font-normal mb-[15px]'>{slots.length} {slots.length > 1 ? 'spaces' : 'space'} available</p>

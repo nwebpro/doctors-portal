@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import FrontEnd from "../Layout/FrontEnd/FrontEnd";
 import Appointment from "../Pages/Appointment/Appointment/Appointment";
+import Contact from "../Pages/Contact/Contact";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import Home from "../Pages/Home/Home/Home";
 import Login from "../Pages/Login/Login";
@@ -23,6 +24,10 @@ export const router = createBrowserRouter([
             {
                 path: '/appointment',
                 element: <Appointment />
+            },
+            {
+                path: '/contact',
+                element: <Contact />
             }
             
         ]

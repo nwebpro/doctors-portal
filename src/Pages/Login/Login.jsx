@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import useSetTitle from '../../Hooks/useSetTitle';
 import Header from '../Shared/Header/Header';
 
 const Login = () => {
+    useSetTitle('Login')
     return (
         <>
             <Header />
