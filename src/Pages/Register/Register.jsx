@@ -6,13 +6,20 @@ import Header from '../Shared/Header/Header';
 import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
 import { toast } from 'react-toastify'
 import SocialLogin from '../Shared/SocialLogin/SocialLogin';
+import useToken from '../../Hooks/useToken';
 
 const Register = () => {
     useSetTitle('Register')
     const { register, formState: { errors }, handleSubmit } = useForm();
     const { createUser, updateUserInfo } = useContext(AuthContext)
     const [registerError, setRegisterError] = useState('')
+    const [createdUserEmail, setCreatedUserEmail] = useState('')
+    const [token] = useToken(createdUserEmail)
     const navigate = useNavigate()
+
+    if(token){
+        navigate('/')
+    }
 
     const handleUserRegister = data => {
         setRegisterError('')
@@ -22,8 +29,8 @@ const Register = () => {
                 displayName: data.name
             }
             updateUserInfo(userInfo)
-            navigate('/')
             .then(() => {
+                saveUserInfo(data.name, data.email)
                 toast.success('User Create Successfully!', { autoClose: 400 })
             })
             .catch(error => {
@@ -34,6 +41,27 @@ const Register = () => {
             setRegisterError(error.message)
         })
     }
+
+    // Save user info in database
+    const saveUserInfo = (name, email) => {
+        const user = {
+            name,
+            email
+        }
+        fetch(`${ process.env.REACT_APP_API_URL }/users`, {
+            method: "POST",
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+        .then(res => res.json())
+        .then(data => {
+            setCreatedUserEmail(email)
+        })
+    }
+
+    
 
     return (
         <>
