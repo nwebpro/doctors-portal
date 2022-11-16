@@ -1,17 +1,26 @@
 import { format } from 'date-fns';
-import React, { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query'
+import React, { useState } from 'react';
 import ABookingModal from '../ABookingModal/ABookingModal';
 import AppointmentOption from './AppointmentOption';
+import SmallLoading from '../../Shared/LoadingSpinner/SmallLoading';
 
 const AAppointments = ({ selectedDate }) => {
-    const [appointmentOptions, setAppointmentOptions] = useState([]);
     const [treatment, setTreatment] = useState(null);
+    const date = format(selectedDate, 'PP')
+    const { data:appointmentOptions = [], refetch, isLoading } = useQuery({
+        queryKey: ['appointmentOptions', date],
+        queryFn: async () => {
+            const res = await fetch(`${ process.env.REACT_APP_API_V2_URL }/appointmentOptions?date=${ date }`)
+            const data = await res.json()
+            return data
+        }
+    })
+    const appointmentOption = appointmentOptions.data
 
-    useEffect(() => {
-        fetch('appointmentOptions.json')
-            .then(res => res.json())
-            .then(data => setAppointmentOptions(data))
-    }, [])
+    if(isLoading) {
+        return <SmallLoading />
+    }
 
     return (
         <section className='container mx-auto px-[21px]'>
@@ -20,7 +29,7 @@ const AAppointments = ({ selectedDate }) => {
             </div>
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-9'>
                 {
-                    appointmentOptions.map(option => (
+                    appointmentOption?.map(option => (
                         <AppointmentOption 
                             key={ option._id }
                             appointmentOption={ option }
@@ -31,10 +40,12 @@ const AAppointments = ({ selectedDate }) => {
             </div>
             {
                 treatment &&
+
                 <ABookingModal 
                     selectedDate={selectedDate}
                     treatment={treatment}
                     setTreatment={setTreatment}
+                    refetch={refetch}
                 />
             }
         </section>
