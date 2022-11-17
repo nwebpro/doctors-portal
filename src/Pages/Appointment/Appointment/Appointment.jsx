@@ -7,10 +7,10 @@ const Appointment = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     useSetTitle('Appointment')
     return (
-        <div className='pb-20 lg:pb-36'>
+        <section className='pb-20 lg:pb-36'>
             <AppointmentHero selectedDate={ selectedDate } setSelectedDate={ setSelectedDate } />
             <AAppointments selectedDate={ selectedDate } />
-        </div>
+        </section>
     );
 };
 

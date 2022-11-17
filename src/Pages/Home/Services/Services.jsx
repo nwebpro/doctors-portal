@@ -27,7 +27,7 @@ const Services = () => {
     ]
 
     return (
-        <div className='container mx-auto px-[21px] py-20 lg:pt-[131px] lg:pb-[154px]'>
+        <section className='container mx-auto px-[21px] py-20 lg:pt-[131px] lg:pb-[154px]'>
             <div className='text-center mb-[70px]'>
                 <h3 className='text-xl font-bold text-theme-1st uppercase'>Our Services</h3>
                 <h2 className='text-3xl'>Services We Provide</h2>
@@ -39,7 +39,7 @@ const Services = () => {
                     ))
                 }
             </div>
-        </div>
+        </section>
     );
 };
 

@@ -6,6 +6,7 @@ import Header from '../Shared/Header/Header';
 import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
 import { toast } from 'react-toastify'
 import SocialLogin from '../Shared/SocialLogin/SocialLogin';
+import useToken from '../../Hooks/useToken';
 
 const Login = () => {
     useSetTitle('Login')
@@ -15,12 +16,18 @@ const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const { userLogin } = useContext(AuthContext)
     const [loginError, setLoginError ] = useState('')
+    const [loginUserEmail, setLoginUserEmail] = useState('')
+    const [token] = useToken(loginUserEmail)
+
+    if(token) {
+        navigate(from, { replace: true })
+    }
 
     const handleLogin = data => {
         setLoginError('')
         userLogin(data.email, data.password)
         .then(result => {
-            navigate(from, { replace: true })
+            setLoginUserEmail(data.email)
             toast.success('User Login Successfully!', { autoClose: 400 })
         })
         .catch(error => {

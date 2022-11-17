@@ -1,5 +1,6 @@
 import { format } from 'date-fns';
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../../Context/AuthProvider/AuthProvider';
 
@@ -76,7 +77,12 @@ const ABookingModal = ({ treatment, setTreatment, selectedDate, refetch }) => {
                             <input type="text" name="phone" placeholder='Phone Number' className="py-[15px] px-[19px] bg-white text-base placeholder-[#3A425666] text-theme-3rd leading-5 border rounded-lg focus:outline-none w-full" required />
                         </div>
                         <div className='text-center'>
-                            <button className='py-[13px] w-full text-base font-normal uppercase text-white rounded-lg bg-gradient-to-r from-theme-2nd to-theme-1st'>Submit</button>
+                            {
+                                user?.uid ?
+                                <button className='py-[13px] w-full text-base font-normal uppercase text-white rounded-lg bg-gradient-to-r from-theme-2nd to-theme-1st'>Submit</button>
+                                :
+                                <Link to='/login' className='block py-[13px] w-full text-base font-normal uppercase text-white rounded-lg bg-gradient-to-r from-theme-2nd to-theme-1st'>Login Please</Link>
+                            }
                         </div>
                     </form>
                 </div>

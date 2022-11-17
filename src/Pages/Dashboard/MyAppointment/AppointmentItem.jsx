@@ -3,7 +3,7 @@ import React from 'react';
 const AppointmentItem = ({ book, index }) => {
     const { patient, slot, treatment, appointmentDate, phone } = book
     return (
-        <tr>
+        <tr className='text-center'>
             <th>{ index + 1 }</th>
             <td>{ patient }</td>
             <td>{ treatment }</td>

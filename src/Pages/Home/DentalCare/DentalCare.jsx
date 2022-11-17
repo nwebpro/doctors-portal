@@ -4,7 +4,7 @@ import treatment from '../../../assets/images/treatment.png'
 
 const DentalCare = () => {
     return (
-        <div className='container mx-auto px-[21px] pb-20 md:pb-28 lg:pb-40'>
+        <section className='container mx-auto px-[21px] pb-20 md:pb-28 lg:pb-40'>
             <div className='lg:w-[1057px] mx-auto grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-[102px] items-center'>
                 <img src={ treatment } className='rounded-lg' alt="" />
                 <div>
@@ -13,7 +13,7 @@ const DentalCare = () => {
                     <PrimaryButton btnText='GET STARTED' />
                 </div>
             </div>
-        </div>
+        </section>
     );
 };
 
