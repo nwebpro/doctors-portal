@@ -42,7 +42,7 @@ const MyAppointment = () => {
                 </thead>
                 <tbody>
                     {
-                        booking.map((book, index) => (
+                        booking?.map((book, index) => (
                             <AppointmentItem key={book._id} book={book} index={index} />
                         ))
                     }

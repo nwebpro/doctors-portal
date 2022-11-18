@@ -3,8 +3,10 @@ import DashboardLayout from "../Layout/Dashboard/DashboardLayout";
 import FrontEnd from "../Layout/FrontEnd/FrontEnd";
 import Appointment from "../Pages/Appointment/Appointment/Appointment";
 import Contact from "../Pages/Contact/Contact";
+import AddDoctor from "../Pages/Dashboard/AddDoctor/AddDoctor";
 import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
 import Dashboard from "../Pages/Dashboard/Dashboard/Dashboard";
+import ManageDoctors from "../Pages/Dashboard/ManageDoctors/ManageDoctors";
 import MyAppointment from "../Pages/Dashboard/MyAppointment/MyAppointment";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import Home from "../Pages/Home/Home/Home";
@@ -59,6 +61,22 @@ export const router = createBrowserRouter([
                 element: (
                     <AdminRoute>
                         <AllUsers />
+                    </AdminRoute>
+                )
+            },
+            {
+                path: '/dashboard/add-doctor',
+                element: (
+                    <AdminRoute>
+                        <AddDoctor />
+                    </AdminRoute>
+                )
+            },
+            {
+                path: '/dashboard/manage-doctors',
+                element: (
+                    <AdminRoute>
+                        <ManageDoctors />
                     </AdminRoute>
                 )
             }
