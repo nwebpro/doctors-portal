@@ -7,11 +7,13 @@ import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
 import { toast } from 'react-toastify'
 import SocialLogin from '../Shared/SocialLogin/SocialLogin';
 import useToken from '../../Hooks/useToken';
+import SmallSpinner from '../../component/Spinner/SmallSpinner';
+import PrimaryButton from '../../component/PrimaryButton/PrimaryButton';
 
 const Register = () => {
     useSetTitle('Register')
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const { createUser, updateUserInfo } = useContext(AuthContext)
+    const { createUser, updateUserInfo, loading, setLoading } = useContext(AuthContext)
     const [registerError, setRegisterError] = useState('')
     const [createdUserEmail, setCreatedUserEmail] = useState('')
     const [token] = useToken(createdUserEmail)
@@ -32,6 +34,7 @@ const Register = () => {
             .then(() => {
                 saveUserInfo(data.name, data.email)
                 toast.success('User Create Successfully!', { autoClose: 400 })
+                setLoading(false)
             })
             .catch(error => {
                 toast.error(error.message, { autoClose: 400 })
@@ -92,7 +95,7 @@ const Register = () => {
                                         {errors.password && <p className='text-red-600 text-xs text-left' role="alert">{errors.password?.message}</p>}
                                     </div>
                                     <div className="mb-10">
-                                        <input type="submit" value="Sign In" className="w-full cursor-pointer rounded-md border py-3 px-5 text-base font-bold text-white transition bg-gradient-to-r from-theme-2nd to-theme-1st" />
+                                        <PrimaryButton classes={'w-full block'} btnText={loading ? <SmallSpinner /> : 'Sign Up' } />
                                     </div>
                                     {registerError && <p className='text-red-600 text-sm text-center mb-5' role="alert">{ registerError }</p>}
                                 </form>

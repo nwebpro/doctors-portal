@@ -3,6 +3,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import PrimaryButton from '../../../component/PrimaryButton/PrimaryButton';
 import SmallLoading from '../../Shared/LoadingSpinner/SmallLoading';
 
 const AddDoctor = () => {
@@ -26,7 +27,7 @@ const AddDoctor = () => {
         const image = data.image[0]
         const formData = new FormData()
         formData.append('image', image)
-        const url = `https://api.imgbb.com/1/upload?expiration=600&key=${ imageUploadApiKey }`
+        const url = `https://api.imgbb.com/1/upload?key=${ imageUploadApiKey }`
         fetch(url, {
             method: "POST",
             body: formData
@@ -97,7 +98,7 @@ const AddDoctor = () => {
                         {errors.fileUpload && <p className='text-red-600 text-xs text-left' role="alert">{errors.fileUpload?.message}</p>}
                     </div>
                     <div className="mb-10">
-                        <input type="submit" value="Add Doctor" className="w-full cursor-pointer rounded-md border py-3 px-5 text-base font-bold text-white transition bg-gradient-to-r from-theme-2nd to-theme-1st" />
+                        <PrimaryButton classes={'w-full block'} btnText={ 'Add Doctor' } />
                     </div>
                 </form>
             </div>

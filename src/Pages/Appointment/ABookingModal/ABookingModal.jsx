@@ -2,13 +2,15 @@ import { format } from 'date-fns';
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import PrimaryButton from '../../../component/PrimaryButton/PrimaryButton';
+import SmallSpinner from '../../../component/Spinner/SmallSpinner';
 import { AuthContext } from '../../../Context/AuthProvider/AuthProvider';
 
 const ABookingModal = ({ treatment, setTreatment, selectedDate, refetch }) => {
     // treatment is just another name of appointmentOptions with name, slots, _id
     const { name: treatmentName, slots } = treatment
     const date = format(selectedDate, 'PP')
-    const { user } = useContext(AuthContext)
+    const { user, loading, setLoading } = useContext(AuthContext)
 
     const handleBooking = e => {
         e.preventDefault();
@@ -39,6 +41,7 @@ const ABookingModal = ({ treatment, setTreatment, selectedDate, refetch }) => {
             setTreatment(null)
             if(data.success){
                 toast.success('Booking confirmed', { autoClose: 400 })
+                setLoading(false)
                 refetch()
             }else {
                 toast.error(data.message)
@@ -79,7 +82,7 @@ const ABookingModal = ({ treatment, setTreatment, selectedDate, refetch }) => {
                         <div className='text-center'>
                             {
                                 user?.uid ?
-                                <button className='py-[13px] w-full text-base font-normal uppercase text-white rounded-lg bg-gradient-to-r from-theme-2nd to-theme-1st'>Submit</button>
+                                <PrimaryButton classes={'w-full block uppercase'} btnText={loading ? <SmallSpinner /> : 'Submit' } />
                                 :
                                 <Link to='/login' className='block py-[13px] w-full text-base font-normal uppercase text-white rounded-lg bg-gradient-to-r from-theme-2nd to-theme-1st'>Login Please</Link>
                             }

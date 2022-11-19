@@ -1,9 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+import ConfirmationModal from '../../Shared/ConfirmationModal/ConfirmationModal';
 import SmallLoading from '../../Shared/LoadingSpinner/SmallLoading';
 
 const ManageDoctors = () => {
-    const {data:doctors = [], isLoading} = useQuery({
+    const [deletedDoctor, setDeletedDoctor] = useState(null)
+    const {data:doctors = [], isLoading, refetch} = useQuery({
         queryKey: ['doctors'],
         queryFn: async () => {
             const res = await fetch(`${ process.env.REACT_APP_API_URL }/doctors`)
@@ -17,8 +20,27 @@ const ManageDoctors = () => {
         return <SmallLoading />
     }
 
+    const closeModal = () => {
+        setDeletedDoctor(null)
+    }
+    const handleDoctorDelete = doctorId => {
+        fetch(`${ process.env.REACT_APP_API_URL }/doctors/${ doctorId }`, {
+            method: "DELETE",
+            headers: {
+                authorization: `Bearer ${ localStorage.getItem('doctorsPortalAccessToken') }`
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.success) {
+                toast.success(data.message, { autoClose: 400 })
+                refetch()
+            }
+        })
+    }
+
     return (
-        <div className="overflow-x-auto py-10">
+        <section className="overflow-x-auto py-10">
             <h1 className='text-2xl font-bold mb-5'>Manage Doctors</h1>
             <table className="table w-full">
                 <thead>
@@ -41,14 +63,25 @@ const ManageDoctors = () => {
                                 <td>{ doctor.name }</td>
                                 <td>{ doctor.specialty }</td>
                                 <td>
-                                    <button className='bg-red-600 py-1 px-3 text-xs text-white font-bold rounded-full'>Delete</button>
+                                    <label onClick={() => setDeletedDoctor(doctor)} htmlFor="confirmationModal" className="cursor-pointer bg-red-600 py-1 px-3 text-xs text-white font-bold rounded-full">Delete</label>
                                 </td>
                             </tr>
                         )
                     }
                 </tbody>
             </table>
-        </div>
+            {
+                deletedDoctor &&
+                <ConfirmationModal 
+                    title={`Are you sure you want to delete?`}
+                    message={`If you delete ${ deletedDoctor.name }. It cannot be undone!`}
+                    closeModal={closeModal}
+                    successAction={handleDoctorDelete}
+                    successButtonName={`Delete`}
+                    modalData={deletedDoctor}
+                />
+            }
+        </section>
     );
 };
 

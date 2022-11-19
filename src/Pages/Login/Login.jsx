@@ -7,6 +7,8 @@ import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
 import { toast } from 'react-toastify'
 import SocialLogin from '../Shared/SocialLogin/SocialLogin';
 import useToken from '../../Hooks/useToken';
+import PrimaryButton from '../../component/PrimaryButton/PrimaryButton';
+import SmallSpinner from '../../component/Spinner/SmallSpinner';
 
 const Login = () => {
     useSetTitle('Login')
@@ -14,7 +16,7 @@ const Login = () => {
     const location = useLocation()
     const from = location.state?.from?.pathname || '/'
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const { userLogin } = useContext(AuthContext)
+    const { userLogin, loading, setLoading } = useContext(AuthContext)
     const [loginError, setLoginError ] = useState('')
     const [loginUserEmail, setLoginUserEmail] = useState('')
     const [token] = useToken(loginUserEmail)
@@ -29,6 +31,7 @@ const Login = () => {
         .then(result => {
             setLoginUserEmail(data.email)
             toast.success('User Login Successfully!', { autoClose: 400 })
+            setLoading(false)
         })
         .catch(error => {
             setLoginError(error.message)
@@ -56,7 +59,7 @@ const Login = () => {
                                         {errors.password && <p className='text-red-600 text-xs text-left' role="alert">{errors.password?.message}</p>}
                                     </div>
                                     <div className="mb-10">
-                                        <input type="submit" value="Sign In" className="w-full cursor-pointer rounded-md border py-3 px-5 text-base font-bold text-white transition bg-gradient-to-r from-theme-2nd to-theme-1st" />
+                                        <PrimaryButton classes={'w-full block'} btnText={loading ? <SmallSpinner /> : 'Login' } />
                                     </div>
                                     {loginError && <p className='text-red-600 text-sm text-center mb-5' role="alert">{ loginError }</p>}
                                 </form>
