@@ -40,8 +40,8 @@ const ManageDoctors = () => {
     }
 
     return (
-        <section className="overflow-x-auto py-10">
-            <h1 className='text-2xl font-bold mb-5'>Manage Doctors</h1>
+        <section className="overflow-x-auto">
+            <h1 className='text-2xl font-bold text-black mb-[30px]'>Manage Doctors</h1>
             <table className="table w-full">
                 <thead>
                     <tr className='text-center'>

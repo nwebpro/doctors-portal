@@ -34,8 +34,8 @@ const AllUsers = () => {
         return <SmallLoading />
     }
     return (
-        <div className="overflow-x-auto py-10">
-            <h1 className='text-2xl font-bold mb-5'>All Users</h1>
+        <div className="overflow-x-auto">
+            <h1 className='text-2xl font-bold text-black mb-[30px]'>All Users</h1>
             <table className="table w-full">
                 <thead>
                     <tr className='text-center'>

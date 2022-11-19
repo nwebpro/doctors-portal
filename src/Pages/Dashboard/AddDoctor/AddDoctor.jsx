@@ -61,9 +61,9 @@ const AddDoctor = () => {
     }
     
     return (
-        <section className='py-10'>
-            <h2>Add a New Doctor</h2>
-            <div className='w-full md:max-w-xl'>
+        <section>
+            <h2 className='text-2xl font-bold text-black mb-[30px]'>Add a New Doctor</h2>
+            <div className='w-full md:max-w-xl bg-white p-5 md:p-8 lg:p-12 rounded-[10px]'>
                 <form onSubmit={handleSubmit(handleAddDoctor)}>
                     <div className="mb-6">
                         <input type="text" {...register("name", { required: true, minLength: { value: 4, message: 'Name must be 4 character or longer' } })} placeholder="Name" className="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none focus:border-theme-2nd focus-visible:shadow-none" />

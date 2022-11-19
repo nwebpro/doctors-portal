@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, NavLink, Outlet } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
 import useAdmin from '../../Hooks/useAdmin';
 import Header from '../../Pages/Shared/Header/Header'
@@ -12,20 +12,65 @@ const DashboardLayout = () => {
             <Header />
             <div className="drawer drawer-mobile">
                 <input id="dashboardDrawer" type="checkbox" className="drawer-toggle" />
-                <div className="drawer-content px-0 md:px-6 lg:px-10">
+                <div className="drawer-content px-0 md:px-6 lg:px-14 py-12 bg-[#F1F5F9]">
                     <Outlet />
                 </div>
                 <div className="drawer-side">
                     <label htmlFor="dashboardDrawer" className="drawer-overlay"></label> 
-                    <ul className="menu p-4 w-80 text-base-content">
-                        <li><Link to='/dashboard'>Dashboard</Link></li>
-                        <li><Link to='/dashboard/my-appointments'>My Appointments</Link></li>
+                    <ul className="menu w-80 text-base-content bg-white lg:bg-transparent">
+                        <li>
+                            <Link to='/dashboard' className='text-xl font-bold text-[#898989] leading-8 hover:bg-[#F1F5F9] hover:text-[#383838] transition-colors duration-200'>Dashboard</Link></li>
+                        <li>
+                            <NavLink 
+                                to='/dashboard/my-appointments'
+                                className={({ isActive }) =>
+                                    isActive
+                                    ? 'bg-[#F1F5F9] text-xl font-bold text-[#383838] leading-8 transition-colors duration-200'
+                                    : 'text-xl font-bold text-[#898989] leading-8 hover:bg-[#F1F5F9] hover:text-[#383838] transition-colors duration-200'
+                                }
+                            >
+                                My Appointments
+                            </NavLink>    
+                        </li>
                         {
                             isAdmin &&
                             <>
-                                <li><Link to='/dashboard/all-users'>All Users</Link></li>
-                                <li><Link to='/dashboard/add-doctor'>Add Doctor</Link></li>
-                                <li><Link to='/dashboard/manage-doctors'>Manage Doctors</Link></li>
+                                <li>
+                                    <NavLink 
+                                        to='/dashboard/all-users' 
+                                        className={({ isActive }) =>
+                                            isActive
+                                            ? 'bg-[#F1F5F9] text-xl font-bold text-[#383838] leading-8 transition-colors duration-200'
+                                            : 'text-xl font-bold text-[#898989] leading-8 hover:bg-[#F1F5F9] hover:text-[#383838] transition-colors duration-200'
+                                        }
+                                    >
+                                        All Users
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink 
+                                        to='/dashboard/add-doctor'
+                                        className={({ isActive }) =>
+                                            isActive
+                                            ? 'bg-[#F1F5F9] text-xl font-bold text-[#383838] leading-8 transition-colors duration-200'
+                                            : 'text-xl font-bold text-[#898989] leading-8 hover:bg-[#F1F5F9] hover:text-[#383838] transition-colors duration-200'
+                                        }
+                                    >
+                                        Add Doctor
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink 
+                                        to='/dashboard/manage-doctors'
+                                        className={({ isActive }) =>
+                                            isActive
+                                            ? 'bg-[#F1F5F9] text-xl font-bold text-[#383838] leading-8 transition-colors duration-200'
+                                            : 'text-xl font-bold text-[#898989] leading-8 hover:bg-[#F1F5F9] hover:text-[#383838] transition-colors duration-200'
+                                        }
+                                    >
+                                        Manage Doctors
+                                    </NavLink>
+                                </li>
                             </>
                         }
                     </ul>
