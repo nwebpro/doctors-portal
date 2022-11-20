@@ -1,12 +1,13 @@
 import React from 'react';
 
 const AppointmentOption = ({ appointmentOption, setTreatment }) => {
-    const { name, slots } = appointmentOption
+    const { name, slots, price } = appointmentOption
     return (
         <div className='bg-white shadow-box-shadow py-[42px] text-center rounded-[18px]'>
             <h3 className='font-semibold text-lg leading-7 mb-2 text-theme-2nd'>{ name }</h3>
             <p className='text-black text-sm leading-5 font-normal mb-3'>{slots.length > 0 ? slots[0] : 'Try Another day'}</p>
             <p className='text-black text-sm leading-5 font-normal mb-[15px]'>{slots.length} {slots.length > 1 ? 'spaces' : 'space'} available</p>
+            <p className='text-black text-sm leading-5 font-bold mb-[15px]'>Price: ${ price }</p>
             <label
                 disabled={ slots.length === 0 }
                 htmlFor="booking-modal"

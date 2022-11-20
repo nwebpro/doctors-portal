@@ -1,9 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
+import ConfirmationModal from '../../Shared/ConfirmationModal/ConfirmationModal';
 import SmallLoading from '../../Shared/LoadingSpinner/SmallLoading';
 
 const AllUsers = () => {
+    const [deletedUser, setDeletedUser] = useState(null)
     const {data:users = [], isLoading, refetch} = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
@@ -33,6 +35,26 @@ const AllUsers = () => {
     if(isLoading) {
         return <SmallLoading />
     }
+
+    const closeModal = () => {
+        setDeletedUser(null)
+    }
+    const handleUserDelete = userId => {
+        fetch(`${ process.env.REACT_APP_API_URL }/users/${ userId }`, {
+            method: "DELETE",
+            headers: {
+                authorization: `Bearer ${ localStorage.getItem('doctorsPortalAccessToken') }`
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.success) {
+                toast.success(data.message, { autoClose: 400 })
+                refetch()
+            }
+        })
+    }
+
     return (
         <div className="overflow-x-auto">
             <h1 className='text-2xl font-bold text-black mb-[30px]'>All Users</h1>
@@ -60,13 +82,29 @@ const AllUsers = () => {
                                     }
                                 </td>
                                 <td>
-                                    <button className='bg-red-600 py-1 px-3 text-xs text-white font-bold rounded-full'>Delete</button>
+                                    {
+                                        userInfo?.role === 'Admin' ?
+                                        ''
+                                        :
+                                        <label onClick={() => setDeletedUser(userInfo)} htmlFor="confirmationModal" className='cursor-pointer bg-red-600 py-1 px-3 text-xs text-white font-bold rounded-full'>Delete</label>
+                                    }
                                 </td>
                             </tr>
                         )
                     }
                 </tbody>
             </table>
+            {
+                deletedUser &&
+                <ConfirmationModal 
+                    title={`Are you sure you want to delete?`}
+                    message={`If you delete ${ deletedUser.name }. It cannot be undone!`}
+                    closeModal={closeModal}
+                    successAction={handleUserDelete}
+                    successButtonName={`Delete`}
+                    modalData={deletedUser}
+                />
+            }
         </div>
     );
 };

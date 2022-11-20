@@ -9,7 +9,11 @@ const ManageDoctors = () => {
     const {data:doctors = [], isLoading, refetch} = useQuery({
         queryKey: ['doctors'],
         queryFn: async () => {
-            const res = await fetch(`${ process.env.REACT_APP_API_URL }/doctors`)
+            const res = await fetch(`${ process.env.REACT_APP_API_URL }/doctors`, {
+                headers: {
+                    authorization: `Bearer ${ localStorage.getItem('doctorsPortalAccessToken') }`
+                }
+            })
             const data = await res.json()
             return data
         }

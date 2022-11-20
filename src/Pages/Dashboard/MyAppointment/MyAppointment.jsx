@@ -6,7 +6,7 @@ import AppointmentItem from './AppointmentItem';
 
 const MyAppointment = () => {
     const { user } = useContext(AuthContext)
-    const url = `http://localhost:5000/api/v1/doctors-portal/bookings?email=${ user?.email }`
+    const url = `${ process.env.REACT_APP_API_URL }/bookings?email=${ user?.email }`
 
     const {data:bookings = [], isLoading} = useQuery({
         queryKey: ['bookings', user?.email],
@@ -37,7 +37,8 @@ const MyAppointment = () => {
                         <th className='bg-theme-2nd text-white'>Service</th>
                         <th className='bg-theme-2nd text-white'>Time</th>
                         <th className='bg-theme-2nd text-white'>Date</th>
-                        <th className='bg-theme-2nd text-white'>Phone</th>
+                        <th className='bg-theme-2nd text-white'>Price</th>
+                        <th className='bg-theme-2nd text-white'>Payment</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -8,6 +8,7 @@ import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
 import Dashboard from "../Pages/Dashboard/Dashboard/Dashboard";
 import ManageDoctors from "../Pages/Dashboard/ManageDoctors/ManageDoctors";
 import MyAppointment from "../Pages/Dashboard/MyAppointment/MyAppointment";
+import Payment from "../Pages/Dashboard/Payment/Payment";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import Home from "../Pages/Home/Home/Home";
 import Login from "../Pages/Login/Login";
@@ -47,6 +48,7 @@ export const router = createBrowserRouter([
                 <DashboardLayout />
             </PrivateRoute>
         ),
+        errorElement: <ErrorPage />,
         children: [
             {
                 path: '/dashboard',
@@ -79,6 +81,11 @@ export const router = createBrowserRouter([
                         <ManageDoctors />
                     </AdminRoute>
                 )
+            },
+            {
+                path: '/dashboard/payment/:bookingId',
+                loader: ({ params }) => fetch(`${ process.env.REACT_APP_API_URL }/bookings/${ params.bookingId }`),
+                element: <Payment />
             }
         ]
     },

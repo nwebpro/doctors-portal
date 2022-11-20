@@ -8,7 +8,7 @@ import { AuthContext } from '../../../Context/AuthProvider/AuthProvider';
 
 const ABookingModal = ({ treatment, setTreatment, selectedDate, refetch }) => {
     // treatment is just another name of appointmentOptions with name, slots, _id
-    const { name: treatmentName, slots } = treatment
+    const { name: treatmentName, slots, price } = treatment
     const date = format(selectedDate, 'PP')
     const { user, loading, setLoading } = useContext(AuthContext)
 
@@ -25,6 +25,7 @@ const ABookingModal = ({ treatment, setTreatment, selectedDate, refetch }) => {
             treatment: treatmentName,
             patient: name,
             slot,
+            price,
             email,
             phone,
         }
