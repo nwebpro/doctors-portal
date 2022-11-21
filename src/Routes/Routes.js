@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import DashboardLayout from "../Layout/Dashboard/DashboardLayout";
 import FrontEnd from "../Layout/FrontEnd/FrontEnd";
+import About from "../Pages/About/About";
 import Appointment from "../Pages/Appointment/Appointment/Appointment";
 import Contact from "../Pages/Contact/Contact";
 import AddDoctor from "../Pages/Dashboard/AddDoctor/AddDoctor";
@@ -13,6 +14,7 @@ import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import Home from "../Pages/Home/Home/Home";
 import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
+import Reviews from "../Pages/Review/Reviews";
 import AdminRoute from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
 
@@ -31,8 +33,16 @@ export const router = createBrowserRouter([
                 element: <Home />
             },
             {
+                path: '/about',
+                element: <About />
+            },
+            {
                 path: '/appointment',
                 element: <Appointment />
+            },
+            {
+                path: '/reviews',
+                element: <Reviews />
             },
             {
                 path: '/contact',

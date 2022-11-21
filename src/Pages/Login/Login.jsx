@@ -5,7 +5,6 @@ import useSetTitle from '../../Hooks/useSetTitle';
 import Header from '../Shared/Header/Header';
 import { AuthContext } from '../../Context/AuthProvider/AuthProvider';
 import { toast } from 'react-toastify'
-import SocialLogin from '../Shared/SocialLogin/SocialLogin';
 import useToken from '../../Hooks/useToken';
 import PrimaryButton from '../../component/PrimaryButton/PrimaryButton';
 import SmallSpinner from '../../component/Spinner/SmallSpinner';
@@ -69,7 +68,7 @@ const Login = () => {
                                 <div className="text-center border-b border-[#CFCFCF] leading-[0px] mb-5">
                                     <span className="leading-[0px] p-2 font-semibold tracking-wide text-theme-3rd text-base uppercase bg-white">Or</span>
                                 </div>
-                                <SocialLogin />
+                                {/* <SocialLogin /> */}
                                 <div>
                                     <span className="absolute top-1 right-1">
                                         <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -101,7 +101,7 @@ const Header = () => {
     </>
     return (
         <header className="h-16 py-4">
-            <div className='container mx-auto px-10 md:px-14 lg:pl-[100px] lg:pr-[89px]'>
+            <div className='container mx-auto px-10 md:px-14'>
                 <div className="relative flex items-center justify-between">
                     <div className='lg:hidden'>
                         <label htmlFor="dashboardDrawer" className="cursor-pointer">
